@@ -233,6 +233,36 @@
       <div class="tab-content" id="productsTabContent">
         <!-- Active Tab: New Arrivals -->
         <div class="tab-pane fade show active" id="new-arrivals" role="tabpanel">
+          @if ($newProducts->isNotEmpty())
+          <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 g-3">
+            @foreach ($newProducts as $product)
+            <div class="col">
+              <div class="product-card">
+                <div class="product-img-container">
+                  @if ($product->is_new)<span class="badge bg-danger product-badge-corner">Baru</span>@endif
+                  <div class="d-flex align-items-center justify-content-center text-primary fs-1 opacity-75">
+                    <i class="{{ $product->icon_class }}"></i>
+                  </div>
+                </div>
+                <div class="p-3 d-flex flex-column grow">
+                  <div class="text-muted small mb-1">{{ $product->category?->name ?? 'Produk' }}</div>
+                  <h3 class="h6 fw-bold mb-2 text-dark text-truncate">{{ $product->name }}</h3>
+                  <div class="d-flex align-items-center gap-1 text-warning mb-2" style="font-size: 0.75rem;">
+                    @for ($star = 1; $star <= 5; $star++)
+                      <i class="bi {{ $product->rating >= $star ? 'bi-star-fill' : ($product->rating >= $star - 0.5 ? 'bi-star-half' : 'bi-star') }}"></i>
+                    @endfor
+                    <span class="text-muted ms-1">({{ $product->review_count }})</span>
+                  </div>
+                  <div class="mt-auto">
+                    <span class="text-muted small d-block">Mulai dari</span>
+                    <span class="fw-bold fs-6 text-primary">Rp {{ number_format($product->price, 0, ',', '.') }} <span class="small text-muted fw-normal">/ {{ $product->price_unit }}</span></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            @endforeach
+          </div>
+          @else
           <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 g-3">
             <!-- Item 1: ID Card Grosir -->
             <div class="col">
@@ -456,9 +486,32 @@
               </div>
             </div>
           </div>
+          @endif
         </div>
         <!-- Secondary Tab: Best Sellers -->
         <div class="tab-pane fade" id="best-sellers" role="tabpanel">
+          @if ($bestSellerProducts->isNotEmpty())
+          <div class="row row-cols-2 row-cols-md-4 g-3">
+            @foreach ($bestSellerProducts as $product)
+            <div class="col">
+              <div class="product-card">
+                <div class="product-img-container">
+                  <span class="badge bg-warning text-dark product-badge-corner">Terlaris</span>
+                  <i class="{{ $product->icon_class }} fs-1 text-primary opacity-75"></i>
+                </div>
+                <div class="p-3 d-flex flex-column grow">
+                  <div class="text-muted small mb-1">{{ $product->category?->name ?? 'Produk' }}</div>
+                  <h3 class="h6 fw-bold mb-2 text-dark text-truncate">{{ $product->name }}</h3>
+                  <div class="mt-auto">
+                    <span class="text-muted small d-block">Mulai dari</span>
+                    <span class="fw-bold fs-6 text-primary">Rp {{ number_format($product->price, 0, ',', '.') }} <span class="small text-muted fw-normal">/ {{ $product->price_unit }}</span></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            @endforeach
+          </div>
+          @else
           <div class="row row-cols-2 row-cols-md-4 g-3">
             <div class="col">
               <div class="product-card">
@@ -529,6 +582,7 @@
               </div>
             </div>
           </div>
+          @endif
         </div>
       </div>
     </div>

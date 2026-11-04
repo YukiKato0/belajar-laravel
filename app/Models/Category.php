@@ -2,9 +2,18 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Category extends Model
 {
-  protected $fillable = ['name', 'slug', 'icon', 'sort_order'];
+    use HasFactory;
+
+    protected $fillable = ['name', 'slug', 'icon', 'sort_order'];
+
+    public function products(): HasMany
+    {
+        return $this->hasMany(Product::class);
+    }
 }

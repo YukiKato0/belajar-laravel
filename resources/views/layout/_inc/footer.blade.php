@@ -6,7 +6,7 @@
         <div class="mb-3">
           <div class="p-2 bg-white rounded-3 d-inline-block">
             <img alt="PrimaGraphia"
-              src="{{ asset('storage/' . $settings['site_logo']) }}"
+              src="{{ asset('storage/' . ($settings['site_logo'] ?? '')) }}"
               style="height: 38px; width: auto;" />
           </div>
         </div>

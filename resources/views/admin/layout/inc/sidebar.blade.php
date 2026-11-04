@@ -35,7 +35,7 @@
             </a>
           </li>
           <li class="sidebar-menu-item">
-            <a href="{{ url('/admin/product') }}" class="sidebar-menu-link {{ request()->is('admin/product*') ? 'active' : '' }}" id="menu-product" title="Product">
+            <a href="{{ route('admin.product.index') }}" class="sidebar-menu-link {{ request()->routeIs('admin.product.*') ? 'active' : '' }}" id="menu-product" title="Product">
               <i class="bi bi-box-seam"></i>
               <span>Product</span>
             </a>

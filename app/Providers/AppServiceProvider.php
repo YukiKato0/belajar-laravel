@@ -3,9 +3,9 @@
 namespace App\Providers;
 
 use App\Models\Setting;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
-
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -22,7 +22,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-      $settings = Setting::pluck('value', 'key');
-      View::share('settings', $settings);
+        View::composer(['layout._inc.header', 'layout._inc.footer'], function ($view): void {
+            $settings = Schema::hasTable('settings') ? Setting::pluck('value', 'key')->all() : [];
+            $view->with('settings', $settings);
+        });
     }
 }

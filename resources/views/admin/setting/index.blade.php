@@ -4,24 +4,6 @@
 @section('subtitle', 'Konfigurasi identitas website, logo, kontak dan informasi profil')
 
 @section('content')
-    @if (session('success'))
-        <div class="alert alert-success alert-dismissible fade show mb-4" role="alert">
-            <i class="bi bi-check-circle me-2"></i>{{ session('success') }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    @endif
-
-    @if (isset($errors) && $errors->any())
-        <div class="alert alert-danger alert-dismissible fade show mb-4" role="alert">
-            <ul class="mb-0">
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    @endif
-
     <form action="{{ route('admin.settings.update') }}" method="post" enctype="multipart/form-data">
         @csrf
         
@@ -69,7 +51,7 @@
                     <label class="form-label text-dark">Site Logo</label>
                     @if (!empty($setting['site_logo']))
                         <div class="mb-2">
-                            <img src="{{ asset('storage/' . $setting['site_logo']) }}" alt="Logo" class="img-thumbnail" style="max-height: 80px;">
+                            <img src="{{ asset('storage/' . $setting['site_logo']) }}" alt="Logo Website" class="img-thumbnail" style="max-height: 80px;">
                         </div>
                     @endif
                     <input type="file" class="form-control" name="site_logo" accept="image/*">

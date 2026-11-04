@@ -21,6 +21,9 @@
 
   <!-- Main Design System & Custom Stylesheet -->
   <link rel="stylesheet" href="{{ asset("assets/css/main.css") }}">
+
+  <!-- Quill Text Editor -->
+   <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />
 </head>
 
 <body>
@@ -62,6 +65,25 @@
     <!-- END: Page Header Banner -->
 
     <!-- START: Dynamic Content Area -->
+     @if (session('success'))
+        <div class="alert alert-success alert-dismissible fade show mb-4" role="alert">
+            <i class="bi bi-check-circle me-2"></i>{{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+
+    @if (isset($errors) && $errors->any())
+        <div class="alert alert-danger alert-dismissible fade show mb-4" role="alert">
+            <ul class="mb-0">
+                <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+
     @yield('content')
     <!-- END: Dynamic Content Area -->
 

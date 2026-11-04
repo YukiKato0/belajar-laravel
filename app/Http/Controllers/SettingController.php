@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Setting;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class SettingController extends Controller
 {
@@ -36,6 +37,12 @@ class SettingController extends Controller
         ]);
 
         if ($request->hasFile('site_logo')) {
+            $setting = Setting::where('key', 'site_logo')->first();
+            if($setting && $setting->value) {
+                // Hapus gambar
+                Storage::disk('public')->delete($setting->value);
+            }
+
             $logoPath = $request->file('site_logo')->store('settings', 'public');
             Setting::updateOrCreate(
                 ['key' => 'site_logo'],

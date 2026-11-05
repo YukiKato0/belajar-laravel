@@ -33,6 +33,31 @@ test('admin can create a product', function () {
     ]);
 });
 
+test('admin can save product detail metadata and print configuration', function () {
+    $category = Category::factory()->create();
+
+    $response = $this->post(route('admin.product.store'), [
+        'category_id' => $category->id,
+        'name' => 'Kartu Nama Premium',
+        'price' => 45000,
+        'price_unit' => 'box',
+        'sku' => 'NC-PREM-01',
+        'detail_badge' => 'Produk Unggulan',
+        'production_time' => '1-2 hari kerja',
+        'minimum_order' => 1,
+        'sold_count' => 1200,
+        'detail_highlights_json' => '[{"title":"Art Carton 310gsm","description":"Kertas tebal","icon":"bi bi-patch-check-fill"}]',
+        'configuration_json' => '{"materials":[{"name":"Art Carton 310gsm","price":45000}],"sides":[{"name":"1 sisi","price":0}],"finishes":[],"discounts":[]}',
+    ]);
+
+    $response->assertRedirect(route('admin.product.index'));
+    $product = Product::where('sku', 'NC-PREM-01')->firstOrFail();
+
+    expect($product->detail_badge)->toBe('Produk Unggulan')
+        ->and($product->configuration['materials'][0]['price'])->toBe(45000)
+        ->and($product->detail_highlights[0]['title'])->toBe('Art Carton 310gsm');
+});
+
 test('product creation rejects an invalid category and price', function () {
     $response = $this->from(route('admin.product.create'))->post(route('admin.product.store'), [
         'category_id' => 999,
@@ -81,6 +106,36 @@ test('admin product pages render', function () {
     $this->get(route('admin.product.index'))->assertOk()->assertSee($product->name);
     $this->get(route('admin.product.create'))->assertOk();
     $this->get(route('admin.product.edit', $product))->assertOk()->assertSee($product->name);
+    $this->get(route('admin.product.show', $product))->assertOk()->assertSee($product->name);
+});
+
+test('public product detail renders product configuration and hides inactive products', function () {
+    $this->seed([CategorySeeder::class, ProductSeeder::class]);
+    $product = Product::where('sku', 'NC-PREM-01')->firstOrFail();
+
+    $this->get(route('products.show', $product))
+        ->assertOk()
+        ->assertSee($product->name)
+        ->assertSee('Konfigurasi Spesifikasi Cetak')
+        ->assertSee('Art Carton 310gsm')
+        ->assertSee('Beli Sekarang / Checkout Langsung');
+
+    $product->update(['is_active' => false]);
+
+    $this->get(route('products.show', $product))->assertNotFound();
+});
+
+test('public product detail shows default print configuration when options are not set', function () {
+    $product = Product::factory()->create(['configuration' => null]);
+
+    $this->get(route('products.show', $product))
+        ->assertOk()
+        ->assertSee('1. Jenis Bahan Kertas:')
+        ->assertSee('2. Sisi Cetak:')
+        ->assertSee('3. Finishing Eksklusif:')
+        ->assertSee('Bahan standar')
+        ->assertSee('Sesuai spesifikasi produk')
+        ->assertSee('Finishing standar');
 });
 
 test('product seeder creates the catalog and homepage displays it', function () {
@@ -97,4 +152,5 @@ test('product seeder creates the catalog and homepage displays it', function () 
     $response->assertOk();
     $response->assertSee('ID Card Grosir PVC Standard');
     $response->assertSee('Kartu Nama Art Carton 260gr');
+    $response->assertSee(route('products.show', Product::where('sku', 'NC-PREM-01')->firstOrFail()));
 });

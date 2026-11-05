@@ -6,6 +6,8 @@ use App\Http\Requests\ProductRequest;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Illuminate\View\View;
 
 class ProductController extends Controller
@@ -36,6 +38,7 @@ class ProductController extends Controller
     public function store(ProductRequest $request): RedirectResponse
     {
         $validated = $request->validated();
+        $validated = $this->prepareDetailData($validated);
         $validated['icon_class'] = $validated['icon_class'] ?? 'bi bi-box-seam';
         $validated['rating'] = $validated['rating'] ?? 0;
         $validated['review_count'] = $validated['review_count'] ?? 0;
@@ -49,9 +52,27 @@ class ProductController extends Controller
         return redirect()->route('admin.product.index')->with('success', 'Produk berhasil ditambahkan.');
     }
 
-    /**
-     * Display the specified resource.
-     */
+    public function show(Request $request, Product $product): View
+    {
+        $product->load('category');
+
+        if ($request->routeIs('admin.product.show')) {
+            return view('admin.product.show', compact('product'));
+        }
+
+        abort_unless($product->is_active, 404);
+
+        $relatedProducts = Product::with('category')
+            ->where('is_active', true)
+            ->where('category_id', $product->category_id)
+            ->whereKeyNot($product->getKey())
+            ->orderByDesc('is_best_seller')
+            ->limit(4)
+            ->get();
+
+        return view('products.show', compact('product', 'relatedProducts'));
+    }
+
     /**
      * Show the form for editing the specified resource.
      */
@@ -68,6 +89,7 @@ class ProductController extends Controller
     public function update(ProductRequest $request, Product $product): RedirectResponse
     {
         $validated = $request->validated();
+        $validated = $this->prepareDetailData($validated);
         $validated['icon_class'] = $validated['icon_class'] ?? 'bi bi-box-seam';
         $validated['rating'] = $validated['rating'] ?? 0;
         $validated['review_count'] = $validated['review_count'] ?? 0;
@@ -88,5 +110,26 @@ class ProductController extends Controller
         $product->delete();
 
         return redirect()->route('admin.product.index')->with('success', 'Produk berhasil dihapus.');
+    }
+
+    /** @param array<string, mixed> $validated */
+    private function prepareDetailData(array $validated): array
+    {
+        $validated['detail_highlights'] = filled($validated['detail_highlights_json'] ?? null)
+            ? json_decode($validated['detail_highlights_json'], true, flags: JSON_THROW_ON_ERROR)
+            : null;
+        $validated['configuration'] = filled($validated['configuration_json'] ?? null)
+            ? json_decode($validated['configuration_json'], true, flags: JSON_THROW_ON_ERROR)
+            : null;
+        unset($validated['detail_highlights_json'], $validated['configuration_json']);
+
+        if (blank($validated['sku'] ?? null)) {
+            $validated['sku'] = 'PG-'.Str::upper(Str::random(8));
+        }
+
+        $validated['minimum_order'] = $validated['minimum_order'] ?? 1;
+        $validated['sold_count'] = $validated['sold_count'] ?? 0;
+
+        return $validated;
     }
 }

@@ -20,6 +20,7 @@
                     <tr>
                         <th style="width: 5%;">#</th>
                         <th>Produk</th>
+                        <th>SKU</th>
                         <th>Kategori</th>
                         <th>Harga</th>
                         <th>Status</th>
@@ -34,6 +35,7 @@
                             <i class="{{ $product->icon_class }} me-2 text-primary"></i>{{ $product->name }}
                             <div class="small text-muted">{{ $product->review_count }} ulasan · Rating {{ number_format((float) $product->rating, 1, ',', '.') }}</div>
                         </td>
+                        <td>{{ $product->sku ?? '-' }}</td>
                         <td>{{ $product->category?->name ?? '-' }}</td>
                         <td>Rp {{ number_format($product->price, 0, ',', '.') }} / {{ $product->price_unit }}</td>
                         <td>
@@ -42,9 +44,17 @@
                             @if ($product->is_best_seller)<span class="badge bg-warning text-dark">Terlaris</span>@endif
                         </td>
                         <td class="text-center text-nowrap">
+                            <a href="{{ route('admin.product.show', $product) }}" class="btn btn-sm btn-outline-secondary" aria-label="Lihat data {{ $product->name }}" title="Detail admin">
+                                <i class="bi bi-info-circle"></i>
+                            </a>
                             <a href="{{ route('admin.product.edit', $product) }}" class="btn btn-sm btn-custom-warning" aria-label="Edit {{ $product->name }}" title="Edit">
                                 <i class="bi bi-pencil-square"></i>
                             </a>
+                            @if ($product->is_active)
+                            <a href="{{ route('products.show', $product) }}" class="btn btn-sm btn-outline-primary" aria-label="Pratinjau {{ $product->name }}" title="Pratinjau publik">
+                                <i class="bi bi-box-arrow-up-right"></i>
+                            </a>
+                            @endif
                             <form action="{{ route('admin.product.destroy', $product) }}" method="POST" class="d-inline" onsubmit="return confirm('Yakin ingin menghapus produk ini?')">
                                 @csrf
                                 @method('DELETE')
@@ -56,7 +66,7 @@
                     </tr>
                     @empty
                     <tr>
-                        <td colspan="6" class="text-center text-muted py-4">Belum ada produk.</td>
+                        <td colspan="7" class="text-center text-muted py-4">Belum ada produk.</td>
                     </tr>
                     @endforelse
                 </tbody>

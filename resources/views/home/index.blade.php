@@ -206,7 +206,7 @@
   </section>
   <!-- END: QuickCategoryGrid -->
   <!-- BEGIN: FeaturedProductsTabs -->
-  <section class="py-4 bg-light" data-purpose="featured-products">
+  <section class="py-4 bg-light" data-purpose="featured-products" id="featured-products">
     <div class="container">
       <!-- Tab Navigation & Title Header -->
       <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
@@ -237,6 +237,7 @@
           <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 g-3">
             @foreach ($newProducts as $product)
             <div class="col">
+              <a class="text-decoration-none" href="{{ route('products.show', $product) }}">
               <div class="product-card">
                 <div class="product-img-container">
                   @if ($product->is_new)<span class="badge bg-danger product-badge-corner">Baru</span>@endif
@@ -259,6 +260,7 @@
                   </div>
                 </div>
               </div>
+              </a>
             </div>
             @endforeach
           </div>
@@ -291,6 +293,7 @@
                   </div>
                 </div>
               </div>
+              </a>
             </div>
             <!-- Item 2: Gift Box Kecil -->
             <div class="col">
@@ -494,6 +497,7 @@
           <div class="row row-cols-2 row-cols-md-4 g-3">
             @foreach ($bestSellerProducts as $product)
             <div class="col">
+              <a class="text-decoration-none" href="{{ route('products.show', $product) }}">
               <div class="product-card">
                 <div class="product-img-container">
                   <span class="badge bg-warning text-dark product-badge-corner">Terlaris</span>
@@ -508,6 +512,7 @@
                   </div>
                 </div>
               </div>
+              </a>
             </div>
             @endforeach
           </div>

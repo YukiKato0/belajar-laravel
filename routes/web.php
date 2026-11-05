@@ -23,7 +23,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
     // Resourece
     Route::resource('dashboard', DashboardController::class);
     Route::resource('user', UserController::class);
-    Route::resource('category', CategoryController::class);
+    Route::resource('category', CategoryController::class)->except('show');
     Route::resource('product', ProductController::class);
 
     Route::get('settings', [SettingController::class, 'index'])->name('settings');

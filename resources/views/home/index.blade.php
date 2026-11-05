@@ -129,78 +129,21 @@
           <h2 class="h5 fw-bold mb-0 text-dark">Mau cetak apa hari ini?</h2>
           <p class="text-muted small mb-0">Pilihan kategori lengkap sesuai kebutuhan bisnis Anda</p>
         </div>
-        <a class="text-primary fw-semibold small d-flex align-items-center gap-1" href="katalog.html">
+        <a class="text-primary fw-semibold small d-flex align-items-center gap-1" href="#featured-products">
           Semua produk <i class="bi bi-arrow-right"></i>
         </a>
       </div>
-      <!-- Category Grid: 11 Categories -->
       <div class="row row-cols-3 row-cols-sm-4 row-cols-md-6 row-cols-lg-11 g-2 g-md-3">
-        <div class="col">
-          <a class="cat-icon-card h-100" href="katalog.html">
-            <div class="cat-icon-wrapper"><i class="bi bi-printer"></i></div>
-            <span class="cat-title">Digital Printing</span>
-          </a>
-        </div>
-        <div class="col">
-          <a class="cat-icon-card h-100" href="katalog.html">
-            <div class="cat-icon-wrapper"><i class="bi bi-tag"></i></div>
-            <span class="cat-title">Sticker</span>
-          </a>
-        </div>
-        <div class="col">
-          <a class="cat-icon-card h-100" href="katalog.html">
-            <div class="cat-icon-wrapper"><i class="bi bi-person-badge"></i></div>
-            <span class="cat-title">NameCard &amp; Invitation</span>
-          </a>
-        </div>
-        <div class="col">
-          <a class="cat-icon-card h-100" href="katalog.html">
-            <div class="cat-icon-wrapper"><i class="bi bi-easel"></i></div>
-            <span class="cat-title">Display Promotion</span>
-          </a>
-        </div>
-        <div class="col">
-          <a class="cat-icon-card h-100" href="katalog.html">
-            <div class="cat-icon-wrapper"><i class="bi bi-signpost-2"></i></div>
-            <span class="cat-title">Large Format</span>
-          </a>
-        </div>
-        <div class="col">
-          <a class="cat-icon-card h-100" href="katalog.html">
-            <div class="cat-icon-wrapper"><i class="bi bi-tsunami"></i></div>
-            <span class="cat-title">Garment &amp; Textile</span>
-          </a>
-        </div>
-        <div class="col">
-          <a class="cat-icon-card h-100" href="katalog.html">
-            <div class="cat-icon-wrapper"><i class="bi bi-journal-bookmark"></i></div>
-            <span class="cat-title">Stationary</span>
-          </a>
-        </div>
-        <div class="col">
-          <a class="cat-icon-card h-100" href="katalog.html">
-            <div class="cat-icon-wrapper"><i class="bi bi-cup-hot"></i></div>
-            <span class="cat-title">Merchandise</span>
-          </a>
-        </div>
-        <div class="col">
-          <a class="cat-icon-card h-100" href="katalog.html">
-            <div class="cat-icon-wrapper"><i class="bi bi-box-seam"></i></div>
-            <span class="cat-title">Packaging</span>
-          </a>
-        </div>
-        <div class="col">
-          <a class="cat-icon-card h-100" href="katalog.html">
-            <div class="cat-icon-wrapper"><i class="bi bi-image"></i></div>
-            <span class="cat-title">Home Decor &amp; Photo</span>
-          </a>
-        </div>
-        <div class="col">
-          <a class="cat-icon-card h-100" href="katalog.html">
-            <div class="cat-icon-wrapper"><i class="bi bi-flag"></i></div>
-            <span class="cat-title">Parade Display</span>
-          </a>
-        </div>
+        @forelse ($categories as $category)
+          <div class="col">
+            <a class="cat-icon-card h-100" href="#featured-products">
+              <div class="cat-icon-wrapper"><i class="{{ $category->icon ?: 'bi bi-tag' }}"></i></div>
+              <span class="cat-title">{{ $category->name }}</span>
+            </a>
+          </div>
+        @empty
+          <div class="col-12 text-muted small">Belum ada kategori produk.</div>
+        @endforelse
       </div>
     </div>
   </section>

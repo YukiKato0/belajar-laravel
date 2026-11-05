@@ -15,14 +15,13 @@
             </a>
         </div>
 
-        <!-- Form Tambah User -->
         <form action="{{ route('admin.category.store') }}" method="POST">
             @csrf
 
             <!-- Input Nama -->
             <div class="mb-3">
                 <label for="name" class="form-label">Nama Kategori</label>
-                <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" value="{{ old('name') }}" placeholder="Masukkan nama lengkap" required>
+                <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" value="{{ old('name') }}" placeholder="Contoh: Digital Printing" required>
                 @error('name')
                     <div class="invalid-feedback">
                         {{ $message }}
@@ -30,10 +29,9 @@
                 @enderror
             </div>
 
-            <!-- Input Email -->
             <div class="mb-3">
                 <label for="slug" class="form-label">Slug (Opsional)</label>
-                <input type="slug" class="form-control @error('slug') is-invalid @enderror" id="slug" name="slug" value="{{ old('slug') }}" placeholder="contoh-slug">
+                <input type="text" class="form-control @error('slug') is-invalid @enderror" id="slug" name="slug" value="{{ old('slug') }}" placeholder="Otomatis dari nama kategori">
                 @error('slug')
                     <div class="invalid-feedback">
                         {{ $message }}
@@ -41,10 +39,9 @@
                 @enderror
             </div>
 
-            <!-- Input Ikon -->
             <div class="mb-3">
-                <label for="icon" class="form-label">Ikon</label>
-                <input type="icon" class="form-control @error('icon') is-invalid @enderror" id="icon" name="icon" placeholder="Masukan ikon">
+                <label for="icon" class="form-label">Kelas Ikon Bootstrap</label>
+                <input type="text" class="form-control @error('icon') is-invalid @enderror" id="icon" name="icon" value="{{ old('icon') }}" placeholder="bi bi-printer">
                 @error('icon')
                     <div class="invalid-feedback">
                         {{ $message }}
@@ -52,10 +49,9 @@
                 @enderror
             </div>
             
-            <!-- Input Sort Number -->
             <div class="mb-3">
                 <label for="sort_order" class="form-label">Urutan Tampil</label>
-                <input type="sort_order" class="form-control @error('sort_order') is-invalid @enderror" id="sort_order" name="sort_order" placeholder="Masukan urutan">
+                <input type="number" min="0" class="form-control @error('sort_order') is-invalid @enderror" id="sort_order" name="sort_order" value="{{ old('sort_order', 0) }}">
                 @error('sort_order')
                     <div class="invalid-feedback">
                         {{ $message }}
@@ -66,7 +62,7 @@
             <!-- Tombol Aksi -->
             <div class="d-flex justify-content-end gap-2 mt-4">
                 <a href="{{ route('admin.category.index') }}" class="btn btn-light">Batal</a>
-                <button type="submit" class="btn-custom btn-custom-primary" type="button">Simpan User</button>
+                <button type="submit" class="btn btn-custom-primary">Simpan Kategori</button>
             </div>
         </form>
     </div>

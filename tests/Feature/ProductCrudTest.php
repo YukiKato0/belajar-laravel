@@ -167,6 +167,26 @@ test('public catalog lists active products and filters by category and price', f
         ->assertDontSee('Sticker Nonaktif');
 });
 
+test('public catalog filters products and links by category slug', function () {
+    $category = Category::factory()->create([
+        'name' => 'Sticker',
+        'slug' => 'sticker',
+    ]);
+    $matchingProduct = Product::factory()->create([
+        'category_id' => $category->id,
+        'name' => 'Sticker Berdasarkan Slug',
+    ]);
+    Product::factory()->create([
+        'name' => 'Produk Kategori Lain',
+    ]);
+
+    $this->get(route('catalog.category', ['category' => $category->slug]))
+        ->assertOk()
+        ->assertSee($matchingProduct->name)
+        ->assertDontSee('Produk Kategori Lain')
+        ->assertSee(route('catalog.category', ['category' => $category->slug]));
+});
+
 test('product seeder creates the catalog and homepage displays it', function () {
     $this->seed([SettingSeeder::class, CategorySeeder::class, ProductSeeder::class]);
 

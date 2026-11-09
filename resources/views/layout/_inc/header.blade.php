@@ -11,26 +11,19 @@
             <i class="bi bi-grid-fill"></i> Kategori
           </button>
           <ul class="dropdown-menu shadow border-0 mt-2 py-2" style="font-size: 0.85rem; min-width: 220px;">
-            <li><a class="dropdown-item py-1 fw-medium" href="#"><i class="bi bi-printer text-primary me-2"></i>
-                Digital Printing</a></li>
-            <li><a class="dropdown-item py-1 fw-medium" href="#"><i class="bi bi-tag text-primary me-2"></i>
-                Sticker</a></li>
-            <li><a class="dropdown-item py-1 fw-medium" href="#"><i class="bi bi-person-badge text-primary me-2"></i>
-                NameCard &amp; Invitation</a></li>
-            <li><a class="dropdown-item py-1 fw-medium" href="#"><i class="bi bi-easel text-primary me-2"></i> Display
-                Promotion</a></li>
-            <li><a class="dropdown-item py-1 fw-medium" href="#"><i class="bi bi-signpost-2 text-primary me-2"></i>
-                Large Format</a></li>
-            <li><a class="dropdown-item py-1 fw-medium" href="#"><i class="bi bi-file-text text-primary me-2"></i>
-                Stationary</a></li>
-            <li><a class="dropdown-item py-1 fw-medium" href="#"><i class="bi bi-box-seam text-primary me-2"></i>
-                Packaging</a></li>
+            @forelse ($categories as $category)
+              <li><a class="dropdown-item py-1 fw-medium"
+                  href="{{ route('catalog.category', ['category' => $category->slug]) }}">
+                  <i class="{{ $category->icon ?: 'bi bi-tag' }} text-primary me-2"></i>
+                  {{ $category->name }}</a></li>
+            @empty
+              <li><span class="dropdown-item-text text-muted">Belum ada kategori</span></li>
+            @endforelse
           </ul>
         </div>
         <nav aria-label="Navigasi Header Atas" class="d-flex align-items-center ms-2">
           <a class="nav-top-link {{ request()->routeIs('home') ? 'active' : '' }}" href="{{ route('home') }}"><i class="bi bi-house-door"></i> Beranda</a>
           <a class="nav-top-link {{ request()->routeIs('catalog.index') ? 'active' : '' }}" href="{{ route('catalog.index') }}"><i class="bi bi-layers"></i> Semua Produk</a>
-          <a class="nav-top-link" href="outlet.html"><i class="bi bi-geo-alt"></i> Outlet Kami</a>
           <a class="nav-top-link" href="faq.html"><i class="bi bi-question-circle"></i> FAQ</a>
           <a class="nav-top-link" href="kontak.html"><i class="bi bi-telephone"></i> Hubungi Kami</a>
           <a class="nav-top-link" href="blog.html"><i class="bi bi-journal-text"></i> Blog</a>

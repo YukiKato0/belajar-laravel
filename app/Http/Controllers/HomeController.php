@@ -32,7 +32,7 @@ class HomeController extends Controller
         return view('home.index', compact('categories', 'newProducts', 'bestSellerProducts'));
     }
 
-    public function catalog(Request $request): View
+    public function catalog(Request $request, ?Category $category = null): View
     {
         $filters = $request->validate([
             'q' => ['nullable', 'string', 'max:100'],
@@ -42,6 +42,10 @@ class HomeController extends Controller
             'max_price' => ['nullable', 'integer', 'min:0'],
             'sort' => ['nullable', 'in:relevance,newest,price_asc,price_desc,bestselling'],
         ]);
+
+        if ($category !== null) {
+            $filters['categories'] = [$category->id];
+        }
 
         $productsQuery = Product::query()
             ->with('category')

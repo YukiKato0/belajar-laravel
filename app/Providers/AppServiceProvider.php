@@ -2,8 +2,8 @@
 
 namespace App\Providers;
 
-use App\Models\Setting;
 use App\Models\Category;
+use App\Models\Setting;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
@@ -26,9 +26,14 @@ class AppServiceProvider extends ServiceProvider
         View::composer(['layout._inc.header', 'layout._inc.footer'], function ($view): void {
             $settings = Schema::hasTable('settings') ? Setting::pluck('value', 'key')->all() : [];
             $view->with('settings', $settings);
+        });
 
-            // $categories = Schema::hasTable('categories') ? Category::pluck('value', 'key')->all() : [];
-            // $view->with('categories', $categories);
+        View::composer('layout._inc.header', function ($view): void {
+            $categories = Schema::hasTable('categories')
+                ? Category::orderBy('sort_order')->orderBy('name')->get()
+                : collect();
+
+            $view->with('categories', $categories);
         });
     }
 }

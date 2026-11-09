@@ -138,6 +138,35 @@ test('public product detail shows default print configuration when options are n
         ->assertSee('Finishing standar');
 });
 
+test('public catalog lists active products and filters by category and price', function () {
+    $category = Category::factory()->create(['name' => 'Sticker']);
+    $matchingProduct = Product::factory()->create([
+        'category_id' => $category->id,
+        'name' => 'Sticker Vinyl Custom',
+        'price' => 4500,
+    ]);
+    Product::factory()->create([
+        'category_id' => $category->id,
+        'name' => 'Sticker Mahal',
+        'price' => 12000,
+    ]);
+    Product::factory()->create([
+        'category_id' => $category->id,
+        'name' => 'Sticker Nonaktif',
+        'is_active' => false,
+        'price' => 3000,
+    ]);
+
+    $this->get(route('catalog.index', [
+        'categories' => [$category->id],
+        'max_price' => 5000,
+    ]))
+        ->assertOk()
+        ->assertSee($matchingProduct->name)
+        ->assertDontSee('Sticker Mahal')
+        ->assertDontSee('Sticker Nonaktif');
+});
+
 test('product seeder creates the catalog and homepage displays it', function () {
     $this->seed([SettingSeeder::class, CategorySeeder::class, ProductSeeder::class]);
 

@@ -129,7 +129,7 @@
           <h2 class="h5 fw-bold mb-0 text-dark">Mau cetak apa hari ini?</h2>
           <p class="text-muted small mb-0">Pilihan kategori lengkap sesuai kebutuhan bisnis Anda</p>
         </div>
-        <a class="text-primary fw-semibold small d-flex align-items-center gap-1" href="#featured-products">
+        <a class="text-primary fw-semibold small d-flex align-items-center gap-1" href="{{ route('catalog.index') }}">
           Semua produk <i class="bi bi-arrow-right"></i>
         </a>
       </div>

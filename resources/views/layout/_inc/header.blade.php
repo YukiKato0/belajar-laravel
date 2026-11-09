@@ -28,8 +28,8 @@
           </ul>
         </div>
         <nav aria-label="Navigasi Header Atas" class="d-flex align-items-center ms-2">
-          <a class="nav-top-link active" href="index.html"><i class="bi bi-house-door"></i> Beranda</a>
-          <a class="nav-top-link" href="katalog.html"><i class="bi bi-layers"></i> Semua Produk</a>
+          <a class="nav-top-link {{ request()->routeIs('home') ? 'active' : '' }}" href="{{ route('home') }}"><i class="bi bi-house-door"></i> Beranda</a>
+          <a class="nav-top-link {{ request()->routeIs('catalog.index') ? 'active' : '' }}" href="{{ route('catalog.index') }}"><i class="bi bi-layers"></i> Semua Produk</a>
           <a class="nav-top-link" href="outlet.html"><i class="bi bi-geo-alt"></i> Outlet Kami</a>
           <a class="nav-top-link" href="faq.html"><i class="bi bi-question-circle"></i> FAQ</a>
           <a class="nav-top-link" href="kontak.html"><i class="bi bi-telephone"></i> Hubungi Kami</a>
@@ -50,7 +50,7 @@
     <div class="row align-items-center g-2 g-lg-3">
       <!-- Logo Container -->
       <div class="col-6 col-md-3 col-lg-3">
-        <a class="d-inline-block" href="index.html">
+        <a class="d-inline-block" href="{{ route('home') }}">
           <img alt="PrimaGraphia - Inovasi Cetak Kekinian" class="img-fluid"
             src="{{ asset('storage/' . ($settings['site_logo'] ?? '')) }}"
             style="max-height: 48px; width: auto;" />
@@ -58,10 +58,10 @@
       </div>
       <!-- Global Search Bar Form -->
       <div class="col-12 col-md-6 col-lg-6 order-3 order-md-2">
-        <form class="d-flex align-items-center pg-search-group px-3 py-1" role="search">
+        <form action="{{ route('catalog.index') }}" class="d-flex align-items-center pg-search-group px-3 py-1" method="GET" role="search">
           <i class="bi bi-search text-muted me-2 fs-6"></i>
-          <input aria-label="Search" class="form-control pg-search-input p-0"
-            placeholder="Cari kartu nama, stiker, banner, box..." type="search" />
+          <input aria-label="Search" class="form-control pg-search-input p-0" name="q"
+            placeholder="Cari kartu nama, stiker, banner, box..." type="search" value="{{ request('q') }}" />
           <button aria-label="Tombol Cari"
             class="btn btn-sm btn-pg-primary rounded-circle ms-2 d-flex align-items-center justify-content-center"
             style="width: 28px; height: 28px; padding: 0;" type="submit">

@@ -26,6 +26,7 @@ test('admin can create a product', function () {
     $response->assertRedirect(route('admin.product.index'));
     $this->assertDatabaseHas('products', [
         'name' => 'ID Card PVC',
+        'slug' => 'id-card-pvc',
         'category_id' => $category->id,
         'price' => 4400,
         'is_new' => true,
@@ -113,7 +114,7 @@ test('public product detail renders product configuration and hides inactive pro
     $this->seed([CategorySeeder::class, ProductSeeder::class]);
     $product = Product::where('sku', 'NC-PREM-01')->firstOrFail();
 
-    $this->get(route('products.show', $product))
+    $this->get(route('products.show', ['product' => $product->slug]))
         ->assertOk()
         ->assertSee($product->name)
         ->assertSee('Konfigurasi Spesifikasi Cetak')
@@ -122,13 +123,13 @@ test('public product detail renders product configuration and hides inactive pro
 
     $product->update(['is_active' => false]);
 
-    $this->get(route('products.show', $product))->assertNotFound();
+    $this->get(route('products.show', ['product' => $product->slug]))->assertNotFound();
 });
 
 test('public product detail shows default print configuration when options are not set', function () {
     $product = Product::factory()->create(['configuration' => null]);
 
-    $this->get(route('products.show', $product))
+    $this->get(route('products.show', ['product' => $product->slug]))
         ->assertOk()
         ->assertSee('1. Jenis Bahan Kertas:')
         ->assertSee('2. Sisi Cetak:')
@@ -201,5 +202,5 @@ test('product seeder creates the catalog and homepage displays it', function () 
     $response->assertOk();
     $response->assertSee('ID Card Grosir PVC Standard');
     $response->assertSee('Kartu Nama Art Carton 260gr');
-    $response->assertSee(route('products.show', Product::where('sku', 'NC-PREM-01')->firstOrFail()));
+    $response->assertSee(route('products.show', ['product' => Product::where('sku', 'NC-PREM-01')->firstOrFail()->slug]));
 });

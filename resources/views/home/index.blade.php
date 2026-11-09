@@ -180,7 +180,7 @@
           <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 g-3">
             @foreach ($newProducts as $product)
             <div class="col">
-              <a class="text-decoration-none" href="{{ route('products.show', $product) }}">
+              <a class="text-decoration-none" href="{{ route('products.show', ['product' => $product->slug]) }}">
               <div class="product-card">
                 <div class="product-img-container">
                   @if ($product->is_new)<span class="badge bg-danger product-badge-corner">Baru</span>@endif
@@ -440,7 +440,7 @@
           <div class="row row-cols-2 row-cols-md-4 g-3">
             @foreach ($bestSellerProducts as $product)
             <div class="col">
-              <a class="text-decoration-none" href="{{ route('products.show', $product) }}">
+              <a class="text-decoration-none" href="{{ route('products.show', ['product' => $product->slug]) }}">
               <div class="product-card">
                 <div class="product-img-container">
                   <span class="badge bg-warning text-dark product-badge-corner">Terlaris</span>

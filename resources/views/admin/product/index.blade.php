@@ -51,7 +51,7 @@
                                 <i class="bi bi-pencil-square"></i>
                             </a>
                             @if ($product->is_active)
-                            <a href="{{ route('products.show', $product) }}" class="btn btn-sm btn-outline-primary" aria-label="Pratinjau {{ $product->name }}" title="Pratinjau publik">
+                            <a href="{{ route('products.show', ['product' => $product->slug]) }}" class="btn btn-sm btn-outline-primary" aria-label="Pratinjau {{ $product->name }}" title="Pratinjau publik">
                                 <i class="bi bi-box-arrow-up-right"></i>
                             </a>
                             @endif

@@ -128,7 +128,7 @@
                                 @elseif ($product->detail_badge)
                                     <span class="badge bg-warning text-dark position-absolute top-0 m-3 z-2 px-2 py-1 rounded-pill small" style="left: 0;">{{ $product->detail_badge }}</span>
                                 @endif
-                                <a class="text-decoration-none" href="{{ route('products.show', $product) }}" aria-label="Lihat {{ $product->name }}">
+                                <a class="text-decoration-none" href="{{ route('products.show', ['product' => $product->slug]) }}" aria-label="Lihat {{ $product->name }}">
                                     <div class="bg-light p-4 text-center position-relative d-flex align-items-center justify-content-center" style="height: 180px;">
                                         @if ($product->image_url)
                                             <img alt="{{ $product->name }}" class="img-fluid" src="{{ $product->image_url }}" style="max-height: 145px; object-fit: contain;">
@@ -149,7 +149,7 @@
                                     <div class="mt-auto">
                                         <div class="text-secondary small" style="font-size: 0.75rem;">Mulai dari</div>
                                         <div class="h6 fw-bold text-danger mb-3">Rp {{ number_format($product->price, 0, ',', '.') }} <span class="fw-normal text-muted small">/ {{ $product->price_unit }}</span></div>
-                                        <a class="btn btn-outline-primary btn-sm rounded-pill w-100 fw-semibold" href="{{ route('products.show', $product) }}">Lihat Opsi / Order</a>
+                                        <a class="btn btn-outline-primary btn-sm rounded-pill w-100 fw-semibold" href="{{ route('products.show', ['product' => $product->slug]) }}">Lihat Opsi / Order</a>
                                     </div>
                                 </div>
                             </article>

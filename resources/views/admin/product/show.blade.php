@@ -15,7 +15,7 @@
                 <a href="{{ route('admin.product.index') }}" class="btn btn-light btn-sm"><i class="bi bi-arrow-left"></i> Kembali</a>
                 <a href="{{ route('admin.product.edit', $product) }}" class="btn btn-custom-warning btn-sm"><i class="bi bi-pencil-square"></i> Edit</a>
                 @if ($product->is_active)
-                    <a href="{{ route('products.show', $product) }}" class="btn btn-custom-primary btn-sm" target="_blank" rel="noopener noreferrer"><i class="bi bi-box-arrow-up-right"></i> Pratinjau</a>
+                    <a href="{{ route('products.show', ['product' => $product->slug]) }}" class="btn btn-custom-primary btn-sm" target="_blank" rel="noopener noreferrer"><i class="bi bi-box-arrow-up-right"></i> Pratinjau</a>
                 @endif
             </div>
         </div>

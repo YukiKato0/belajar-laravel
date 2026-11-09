@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Str;
 
 class ProductSeeder extends Seeder
 {
@@ -82,6 +83,7 @@ class ProductSeeder extends Seeder
             $product['production_time'] = $product['production_time'] ?? null;
             $product['file_requirements'] = $product['file_requirements'] ?? null;
             $product['detail_badge'] = $product['detail_badge'] ?? null;
+            $product['slug'] = Str::slug($product['name']);
 
             Product::updateOrCreate(
                 ['name' => $product['name']],

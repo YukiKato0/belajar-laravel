@@ -39,6 +39,7 @@ class ProductController extends Controller
     {
         $validated = $request->validated();
         $validated = $this->prepareDetailData($validated);
+        $validated['slug'] = $this->makeUniqueSlug($validated['name']);
         $validated['icon_class'] = $validated['icon_class'] ?? 'bi bi-box-seam';
         $validated['rating'] = $validated['rating'] ?? 0;
         $validated['review_count'] = $validated['review_count'] ?? 0;
@@ -90,6 +91,9 @@ class ProductController extends Controller
     {
         $validated = $request->validated();
         $validated = $this->prepareDetailData($validated);
+        if ($product->name !== $validated['name']) {
+            $validated['slug'] = $this->makeUniqueSlug($validated['name'], $product);
+        }
         $validated['icon_class'] = $validated['icon_class'] ?? 'bi bi-box-seam';
         $validated['rating'] = $validated['rating'] ?? 0;
         $validated['review_count'] = $validated['review_count'] ?? 0;
@@ -131,5 +135,22 @@ class ProductController extends Controller
         $validated['sold_count'] = $validated['sold_count'] ?? 0;
 
         return $validated;
+    }
+
+    private function makeUniqueSlug(string $name, ?Product $product = null): string
+    {
+        $baseSlug = Str::slug($name) ?: 'product';
+        $slug = $baseSlug;
+        $suffix = 2;
+
+        while (Product::query()
+            ->where('slug', $slug)
+            ->when($product, fn ($query) => $query->whereKeyNot($product->getKey()))
+            ->exists()) {
+            $slug = $baseSlug.'-'.$suffix;
+            $suffix++;
+        }
+
+        return $slug;
     }
 }

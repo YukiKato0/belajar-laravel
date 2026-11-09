@@ -314,7 +314,7 @@
             <div class="row row-cols-2 row-cols-md-4 g-3">
                 @foreach ($relatedProducts as $relatedProduct)
                     <div class="col">
-                        <a class="product-card d-block h-100 text-decoration-none" href="{{ route('products.show', $relatedProduct) }}">
+                        <a class="product-card d-block h-100 text-decoration-none" href="{{ route('products.show', ['product' => $relatedProduct->slug]) }}">
                             <div class="product-img-container d-flex align-items-center justify-content-center text-primary fs-1"><i class="{{ $relatedProduct->icon_class }}"></i></div>
                             <div class="p-3"><span class="small text-muted">{{ $relatedProduct->category?->name }}</span><h3 class="h6 fw-bold text-dark mt-1">{{ $relatedProduct->name }}</h3><span class="fw-bold text-primary">Rp {{ number_format($relatedProduct->price, 0, ',', '.') }} / {{ $relatedProduct->price_unit }}</span></div>
                         </a>

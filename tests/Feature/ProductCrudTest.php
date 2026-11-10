@@ -2,6 +2,7 @@
 
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\User;
 use Database\Seeders\CategorySeeder;
 use Database\Seeders\ProductSeeder;
 use Database\Seeders\SettingSeeder;
@@ -10,6 +11,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 uses(RefreshDatabase::class);
 
 test('admin can create a product', function () {
+    $this->actingAs(User::factory()->create());
     $category = Category::factory()->create();
 
     $response = $this->post(route('admin.product.store'), [
@@ -35,6 +37,7 @@ test('admin can create a product', function () {
 });
 
 test('admin can save product detail metadata and print configuration', function () {
+    $this->actingAs(User::factory()->create());
     $category = Category::factory()->create();
 
     $response = $this->post(route('admin.product.store'), [
@@ -60,6 +63,7 @@ test('admin can save product detail metadata and print configuration', function 
 });
 
 test('product creation rejects an invalid category and price', function () {
+    $this->actingAs(User::factory()->create());
     $response = $this->from(route('admin.product.create'))->post(route('admin.product.store'), [
         'category_id' => 999,
         'name' => 'Produk Tidak Valid',
@@ -73,6 +77,7 @@ test('product creation rejects an invalid category and price', function () {
 });
 
 test('admin can update and delete a product', function () {
+    $this->actingAs(User::factory()->create());
     $product = Product::factory()->create(['name' => 'Produk Lama']);
 
     $response = $this->put(route('admin.product.update', $product), [
@@ -102,6 +107,7 @@ test('admin can update and delete a product', function () {
 });
 
 test('admin product pages render', function () {
+    $this->actingAs(User::factory()->create());
     $product = Product::factory()->create();
 
     $this->get(route('admin.product.index'))->assertOk()->assertSee($product->name);

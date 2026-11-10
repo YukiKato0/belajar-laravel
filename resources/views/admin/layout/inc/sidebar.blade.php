@@ -23,6 +23,12 @@
             </a>
           </li>
           <li class="sidebar-menu-item">
+            <a href="{{ route('admin.product.index') }}" class="sidebar-menu-link {{ request()->routeIs('admin.product.*') ? 'active' : '' }}" id="menu-product" title="Product">
+              <i class="bi bi-box-seam"></i>
+              <span>Product</span>
+            </a>
+          </li>
+          <li class="sidebar-menu-item">
             <a href="{{ route('admin.user.index') }}" class="sidebar-menu-link {{ request()->routeIs('admin.user.*') ? 'active' : '' }}" id="menu-user" title="User">
               <i class="bi bi-person"></i>
               <span>User</span>
@@ -32,12 +38,6 @@
             <a href="{{ route('admin.settings') }}" class="sidebar-menu-link {{ request()->routeIs('admin.settings*') ? 'active' : '' }}" id="menu-setting" title="Setting">
               <i class="bi bi-gear"></i>
               <span>Setting</span>
-            </a>
-          </li>
-          <li class="sidebar-menu-item">
-            <a href="{{ route('admin.product.index') }}" class="sidebar-menu-link {{ request()->routeIs('admin.product.*') ? 'active' : '' }}" id="menu-product" title="Product">
-              <i class="bi bi-box-seam"></i>
-              <span>Product</span>
             </a>
           </li>
         </ul>

@@ -1,12 +1,14 @@
 <?php
 
 use App\Models\Category;
+use App\Models\User;
 use Database\Seeders\CategorySeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
 
 test('admin can create update and delete a category', function () {
+    $this->actingAs(User::factory()->create());
     $createResponse = $this->post(route('admin.category.store'), [
         'name' => 'Cetak Kemasan',
         'icon' => 'bi bi-box-seam',
@@ -40,6 +42,7 @@ test('admin can create update and delete a category', function () {
 });
 
 test('category validation rejects duplicate slugs and invalid sort order', function () {
+    $this->actingAs(User::factory()->create());
     Category::factory()->create(['slug' => 'sticker']);
 
     $this->from(route('admin.category.create'))
@@ -52,6 +55,7 @@ test('category validation rejects duplicate slugs and invalid sort order', funct
 });
 
 test('category pages render and seeded categories appear on homepage', function () {
+    $this->actingAs(User::factory()->create());
     $this->seed(CategorySeeder::class);
     $category = Category::where('slug', 'digital-printing')->firstOrFail();
 

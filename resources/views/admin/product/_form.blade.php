@@ -85,36 +85,36 @@
             <input id="production_time" name="production_time" type="text" maxlength="100" class="form-control @error('production_time') is-invalid @enderror" value="{{ old('production_time', $product->production_time ?? '') }}" placeholder="1-2 hari kerja">
             @error('production_time')<div class="invalid-feedback">{{ $message }}</div>@enderror
         </div>
-        <div class="col-12">
+        <!-- <div class="col-12">
             <label for="detail_highlights_json" class="form-label">Highlight Detail (JSON array)</label>
             <textarea id="detail_highlights_json" name="detail_highlights_json" rows="4" class="form-control font-monospace @error('detail_highlights_json') is-invalid @enderror" placeholder='[{"title":"Art Carton 310gsm","description":"Kertas tebal dan kokoh","icon":"bi bi-patch-check-fill"}]'>{{ old('detail_highlights_json', isset($product) && $product->detail_highlights ? json_encode($product->detail_highlights, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) : '') }}</textarea>
             @error('detail_highlights_json')<div class="invalid-feedback">{{ $message }}</div>@enderror
-        </div>
-        <div class="col-12">
+        </div> -->
+        <!-- <div class="col-12">
             <label for="file_requirements" class="form-label">Panduan File Desain</label>
             <textarea id="file_requirements" name="file_requirements" rows="4" class="form-control @error('file_requirements') is-invalid @enderror" placeholder="PDF, AI, CDR; mode CMYK; resolusi 300 DPI">{{ old('file_requirements', $product->file_requirements ?? '') }}</textarea>
             @error('file_requirements')<div class="invalid-feedback">{{ $message }}</div>@enderror
-        </div>
-        <div class="col-md-4">
+        </div> -->
+        <!-- <div class="col-md-4">
             <label for="template_pdf_url" class="form-label">URL Template PDF</label>
             <input id="template_pdf_url" name="template_pdf_url" type="url" class="form-control @error('template_pdf_url') is-invalid @enderror" value="{{ old('template_pdf_url', $product->template_pdf_url ?? '') }}">
             @error('template_pdf_url')<div class="invalid-feedback">{{ $message }}</div>@enderror
-        </div>
-        <div class="col-md-4">
+        </div> -->
+        <!-- <div class="col-md-4">
             <label for="template_ai_url" class="form-label">URL Template AI</label>
             <input id="template_ai_url" name="template_ai_url" type="url" class="form-control @error('template_ai_url') is-invalid @enderror" value="{{ old('template_ai_url', $product->template_ai_url ?? '') }}">
             @error('template_ai_url')<div class="invalid-feedback">{{ $message }}</div>@enderror
-        </div>
-        <div class="col-md-4">
+        </div> -->
+        <!-- <div class="col-md-4">
             <label for="template_psd_url" class="form-label">URL Template PSD</label>
             <input id="template_psd_url" name="template_psd_url" type="url" class="form-control @error('template_psd_url') is-invalid @enderror" value="{{ old('template_psd_url', $product->template_psd_url ?? '') }}">
             @error('template_psd_url')<div class="invalid-feedback">{{ $message }}</div>@enderror
-        </div>
-        <div class="col-12">
+        </div> -->
+        <!-- <div class="col-12">
             <label for="configuration_json" class="form-label">Konfigurasi Opsi Cetak dan Harga (JSON)</label>
             <textarea id="configuration_json" name="configuration_json" rows="9" class="form-control font-monospace @error('configuration_json') is-invalid @enderror" placeholder='{"materials":[{"name":"Art Carton 310gsm","price":45000}],"sides":[{"name":"1 sisi","price":0}],"finishes":[{"name":"Spot UV","price":20000}],"discounts":[{"minimum":5,"percent":15}]}'>{{ old('configuration_json', isset($product) && $product->configuration ? json_encode($product->configuration, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) : '') }}</textarea>
             @error('configuration_json')<div class="invalid-feedback">{{ $message }}</div>@enderror
-        </div>
+        </div> -->
         <div class="col-12 d-flex flex-wrap gap-4">
             <div class="form-check">
                 <input type="hidden" name="is_new" value="0">

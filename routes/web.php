@@ -15,15 +15,16 @@ Route::get('/katalog/{category:slug}', [HomeController::class, 'catalog'])->name
 Route::get('/products/{product:slug}', [ProductController::class, 'show'])->name('products.show');
 
 Route::prefix('admin')->name('admin.')->group(function () {
-    Route::get('/login', [LoginController::class, 'login']);
+    Route::get('/login', [LoginController::class, 'login'])->name('login');
     Route::post('/actionLogin', [LoginController::class, 'actionLogin'])->name('actionLogin');
 
-    // Resourece
-    Route::resource('dashboard', DashboardController::class);
-    Route::resource('user', UserController::class);
-    Route::resource('category', CategoryController::class)->except('show');
-    Route::resource('product', ProductController::class);
+    Route::middleware('auth')->group(function () {
+        Route::resource('dashboard', DashboardController::class);
+        Route::resource('user', UserController::class);
+        Route::resource('category', CategoryController::class)->except('show');
+        Route::resource('product', ProductController::class);
 
-    Route::get('settings', [SettingController::class, 'index'])->name('settings');
-    Route::post('settings', [SettingController::class, 'update'])->name('settings.update');
+        Route::get('settings', [SettingController::class, 'index'])->name('settings');
+        Route::post('settings', [SettingController::class, 'update'])->name('settings.update');
+    });
 });

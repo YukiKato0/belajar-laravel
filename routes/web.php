@@ -19,6 +19,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::post('/actionLogin', [LoginController::class, 'actionLogin'])->name('actionLogin');
 
     Route::middleware('auth')->group(function () {
+        Route::post('logout', [LoginController::class, 'logout'])->name('logout');
         Route::resource('dashboard', DashboardController::class);
         Route::resource('user', UserController::class);
         Route::resource('category', CategoryController::class)->except('show');

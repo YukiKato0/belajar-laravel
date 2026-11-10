@@ -105,8 +105,20 @@
             <li>
               <hr class="dropdown-divider">
             </li>
-            <li><a class="dropdown-item text-danger" href="page-login.html"><i class="bi bi-box-arrow-right"></i>
-                Logout</a></li>
+            <li>
+              <x-confirmation
+                :action="route('admin.logout')"
+                title="Konfirmasi logout"
+                message="Apakah Anda yakin ingin keluar dari akun admin?"
+                confirm-label="Logout"
+                confirm-class="btn-danger"
+              >
+                <x-slot:trigger>
+                  <button class="dropdown-item text-danger" type="button"><i class="bi bi-box-arrow-right"></i>
+                    Logout</button>
+                </x-slot:trigger>
+              </x-confirmation>
+            </li>
           </ul>
         </div>
       </div>

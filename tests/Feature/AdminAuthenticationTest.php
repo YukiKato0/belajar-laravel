@@ -16,5 +16,18 @@ test('guest can access the admin login page', function () {
 test('authenticated user can access admin routes', function () {
     $this->actingAs(User::factory()->create())
         ->get('/admin/product')
-        ->assertOk();
+        ->assertOk()
+        ->assertSee('data-bs-toggle="modal"', false)
+        ->assertSee('Konfirmasi logout')
+        ->assertSee('Apakah Anda yakin ingin keluar dari akun admin?')
+        ->assertSee('action="'.route('admin.logout').'"', false)
+        ->assertSee('method="POST"', false);
+});
+
+test('admin can log out and loses access to admin routes', function () {
+    $this->actingAs(User::factory()->create())
+        ->post(route('admin.logout'))
+        ->assertRedirect(route('admin.login'));
+
+    $this->get('/admin/product')->assertRedirect(route('admin.login'));
 });

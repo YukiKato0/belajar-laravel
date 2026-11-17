@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Admin\BlogController as AdminBlogController;
+use App\Http\Controllers\BlogController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
@@ -13,6 +15,8 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/katalog', [HomeController::class, 'catalog'])->name('catalog.index');
 Route::get('/katalog/{category:slug}', [HomeController::class, 'catalog'])->name('catalog.category');
 Route::get('/products/{product:slug}', [ProductController::class, 'show'])->name('products.show');
+Route::get('/blog', [BlogController::class, 'index'])->name('blogs.index');
+Route::get('/blog/{blog:slug}', [BlogController::class, 'show'])->name('blogs.show');
 
 Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('/login', [LoginController::class, 'login'])->name('login');
@@ -23,6 +27,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::resource('dashboard', DashboardController::class);
         Route::resource('user', UserController::class);
         Route::resource('category', CategoryController::class)->except('show');
+        Route::resource('blog', AdminBlogController::class)->except('show');
         Route::resource('product', ProductController::class);
 
         Route::get('settings', [SettingController::class, 'index'])->name('settings');

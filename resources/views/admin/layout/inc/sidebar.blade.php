@@ -29,6 +29,12 @@
             </a>
           </li>
           <li class="sidebar-menu-item">
+            <a href="{{ route('admin.blog.index') }}" class="sidebar-menu-link {{ request()->routeIs('admin.blog.*') ? 'active' : '' }}" id="menu-blog" title="Blog">
+              <i class="bi bi-journal-text"></i>
+              <span>Blog</span>
+            </a>
+          </li>
+          <li class="sidebar-menu-item">
             <a href="{{ route('admin.user.index') }}" class="sidebar-menu-link {{ request()->routeIs('admin.user.*') ? 'active' : '' }}" id="menu-user" title="User">
               <i class="bi bi-person"></i>
               <span>User</span>

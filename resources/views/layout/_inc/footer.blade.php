@@ -63,7 +63,7 @@
           <li><a href="kontak.html">Hubungi Kami</a></li>
           <li><a href="faq.html">FAQ (Tanya Jawab)</a></li>
           <li><a href="#">Tentang Perusahaan</a></li>
-          <li><a href="blog.html">Blog &amp; Edukasi</a></li>
+          <li><a href="{{ route('blogs.index') }}">Blog &amp; Edukasi</a></li>
           <li><a href="outlet.html">Outlet &amp; Lokasi Cabang</a></li>
           <li><a href="#">Unduh Template Desain</a></li>
           <li><a href="#">Kebijakan Privasi</a></li>

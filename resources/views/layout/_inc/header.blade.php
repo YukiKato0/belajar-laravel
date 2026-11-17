@@ -26,7 +26,7 @@
           <a class="nav-top-link {{ request()->routeIs('catalog.index') ? 'active' : '' }}" href="{{ route('catalog.index') }}"><i class="bi bi-layers"></i> Semua Produk</a>
           <a class="nav-top-link" href="faq.html"><i class="bi bi-question-circle"></i> FAQ</a>
           <a class="nav-top-link" href="kontak.html"><i class="bi bi-telephone"></i> Hubungi Kami</a>
-          <a class="nav-top-link" href="blog.html"><i class="bi bi-journal-text"></i> Blog</a>
+          <a class="nav-top-link {{ request()->routeIs('blogs.*') ? 'active' : '' }}" href="{{ route('blogs.index') }}"><i class="bi bi-journal-text"></i> Blog</a>
         </nav>
       </div>
       <div class="d-flex align-items-center gap-3 text-muted" style="font-size: 0.8rem;">
